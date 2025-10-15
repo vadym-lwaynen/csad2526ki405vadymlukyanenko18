@@ -48,7 +48,7 @@ In math_operations.h, define a C++ function prototype 'int add(int a, int b);' a
 int add(int a, int b);
 
 #endif // MATH_OPERATIONS_H
-
+```
 ### File: math_operations.cpp
 
 **Zapyt:**
@@ -60,6 +60,7 @@ Implement the function 'int add(int a, int b)' from math_operations.h in math_op
 int add(int a, int b) {
     return a + b;
 }
+```
 ### File: tests/unit_tests.cpp
 
 **Zapyt:**
@@ -79,6 +80,7 @@ TEST(BasicAddition, HandlesNegativeNumbers) {
     EXPECT_EQ(add(-10, 5), -5);
     EXPECT_EQ(add(7, -4), 3);
 }
+``` 
 ### File: CMakeLists.txt (Final Update)
 
 **Zapyt:**
@@ -119,3 +121,4 @@ target_link_libraries(unit_tests
 # Discover and register tests
 include(GoogleTest)
 gtest_discover_tests(unit_tests)
+``` 

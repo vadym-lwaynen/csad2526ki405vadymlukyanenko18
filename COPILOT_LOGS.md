@@ -122,3 +122,30 @@ target_link_libraries(unit_tests
 include(GoogleTest)
 gtest_discover_tests(unit_tests)
 ``` 
+## Etap 4: Local CI Script (ci.sh)
+
+### File: ci.sh
+
+**Zapyt:**
+Generate a bash script ci.sh that performs the following steps for a CMake project: 1) create a 'build' directory, 2) enter the directory, 3) configure the project with 'cmake ..', 4) build the project with 'cmake --build .', and 5) run all CTest unit tests.
+
+**Zhenerovanyi kod:**
+```bash
+#!/bin/bash
+set -e  # Exit immediately if a command exits with a non-zero status
+
+# Step 1: Create the build directory
+mkdir -p build
+
+# Step 2: Enter the build directory
+cd build
+
+# Step 3: Configure the project
+cmake ..
+
+# Step 4: Build the project
+cmake --build .
+
+# Step 5: Run all CTest unit tests
+ctest --output-on-failure
+``` 

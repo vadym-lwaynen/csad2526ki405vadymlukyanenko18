@@ -149,3 +149,47 @@ cmake --build .
 # Step 5: Run all CTest unit tests
 ctest --output-on-failure
 ``` 
+## Etap 5: GitHub Actions (ci.yml)
+
+### File: .github/workflows/ci.yml
+
+**Zapyt:**
+Generate a GitHub Actions workflow in ci.yml. The workflow should: 1) be triggered on push or pull request to branches containing 'develop' or 'master' in their name. 2) Use a matrix for jobs to run on ubuntu-latest, windows-latest, and macos-latest. 3) The steps should checkout code, set up CMake, run the ci.sh script for build and tests, and upload build artifacts.
+
+**Zhenerovanyi kod:**
+```yml
+name: CI
+
+on:
+  push:
+    branches:
+      - develop
+      - master
+  pull_request:
+    branches:
+      - develop
+      - master
+
+jobs:
+  build-and-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up CMake
+      uses: lukka/get-cmake@latest
+
+    - name: Run CI script
+      run: ./ci.sh
+      shell: bash
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-${{ matrix.os }}
+        path: ./build
+```

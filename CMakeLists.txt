@@ -51,4 +51,5 @@ target_link_libraries(UnitTests PRIVATE
 )
 
 # Register the test
-add_test(NAME RunUnitTests COMMAND UnitTests)
+include(GoogleTest)
+gtest_discover_tests(UnitTests)

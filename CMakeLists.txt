@@ -27,8 +27,7 @@ enable_testing()
 add_executable(UnitTests ${TEST_SOURCES})
 
 # Link test executable with necessary libraries (e.g., gtest)
-find_package(GTest REQUIRED)
-target_link_libraries(UnitTests GTest::gtest_main)
+target_link_libraries(UnitTests gtest_main)
 
 # Add test to CTest
 add_test(NAME RunUnitTests COMMAND UnitTests)

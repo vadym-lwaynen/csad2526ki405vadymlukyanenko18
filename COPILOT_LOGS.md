@@ -84,7 +84,7 @@ TEST(BasicAddition, HandlesNegativeNumbers) {
 ### File: CMakeLists.txt (Final Update)
 
 **Zapyt:**
-Modify the existing CMakeLists.txt to fetch and link the Google Test framework using FetchContent.
+Modify CMakeLists.txt to add the current source directory as a PRIVATE include directory for the UnitTests target, to resolve header path issues.
 **Zhenerovanyi kod:**
 ```cpp
 cmake_minimum_required(VERSION 3.14)

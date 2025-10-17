@@ -87,40 +87,61 @@ TEST(BasicAddition, HandlesNegativeNumbers) {
 Modify CMakeLists.txt to add the current source directory as a PRIVATE include directory for the UnitTests target, to resolve header path issues.
 **Zhenerovanyi kod:**
 ```cpp
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.10)
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 project(MyProject)
+
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+# Define source files for main application (corrected paths)
+set(SOURCES
+    main.cpp
+    math_operations.cpp
+)
+
+add_executable(MyApp ${SOURCES})
 
 # Enable testing
 enable_testing()
 
-# Add FetchContent module
+# Include FetchContent module
 include(FetchContent)
 
 # Fetch GoogleTest
 FetchContent_Declare(
-  googletest
-  URL https://github.com/google/googletest/archive/refs/heads/main.zip
+    googletest
+    URL https://github.com/google/googletest/archive/refs/heads/main.zip
 )
 
-# Make GoogleTest available
+# Make available
 FetchContent_MakeAvailable(googletest)
 
-# Add your source files
-add_library(math_operations math_operations.cpp)
-
-# Add test executable
-add_executable(unit_tests unit_tests.cpp)
-
-# Link test executable with GoogleTest and your library
-target_link_libraries(unit_tests
-  PRIVATE
-    math_operations
-    gtest_main
+# Define source files for unit tests (corrected paths)
+set(TEST_SOURCES
+    tests/unit_tests.cpp
+    math_operations.cpp
 )
 
-# Discover and register tests
+# Add test executable
+add_executable(UnitTests ${TEST_SOURCES})
+
+# FINAL FIX: Include directories for GTest and local headers
+target_include_directories(UnitTests PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${googletest_SOURCE_DIR}/googletest/include
+    ${googletest_SOURCE_DIR}/googlemock/include
+)
+
+target_link_libraries(UnitTests PRIVATE
+    gtest_main
+    GTest::gtest
+)
+
+# Register the test
 include(GoogleTest)
-gtest_discover_tests(unit_tests)
+gtest_discover_tests(UnitTests)
 ``` 
 ## Etap 4: Local CI Script (ci.sh)
 

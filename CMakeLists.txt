@@ -1,42 +1,34 @@
 cmake_minimum_required(VERSION 3.10)
-
-project(hello)
-cmake_minimum_required(VERSION 3.14)
 project(MyProject)
+
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+# Define source files for the main application
+set(SOURCES
+    main.cpp
+    math_operations.cpp
+)
+
+# Create the main executable
+add_executable(MyApp ${SOURCES})
+
+# Define source files for unit tests
+set(TEST_SOURCES
+    tests/unit_tests.cpp
+    math_operations.cpp  # Include math_operations.cpp for linking
+)
 
 # Enable testing
 enable_testing()
 
-# Add FetchContent module
-include(FetchContent)
-
-# Fetch GoogleTest
-FetchContent_Declare(
-  googletest
-  URL https://github.com/google/googletest/archive/refs/heads/main.zip
-)
-
-# Make GoogleTest available
-FetchContent_MakeAvailable(googletest)
-
-# Add your source files
-add_library(math_operations math_operations.cpp)
-
 # Add test executable
-add_executable(unit_tests unit_tests.cpp)
+add_executable(UnitTests ${TEST_SOURCES})
 
-# Link test executable with GoogleTest and your library
-target_link_libraries(unit_tests
-  PRIVATE
-    math_operations
-    gtest_main
-)
+# Link test executable with necessary libraries (e.g., gtest)
+find_package(GTest REQUIRED)
+target_link_libraries(UnitTests GTest::gtest_main)
 
-# Discover and register tests
-include(GoogleTest)
-gtest_discover_tests(unit_tests)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-
-add_executable(hello main.cpp)
+# Add test to CTest
+add_test(NAME RunUnitTests COMMAND UnitTests)

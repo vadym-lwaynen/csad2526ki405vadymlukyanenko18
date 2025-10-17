@@ -44,11 +44,9 @@ target_include_directories(UnitTests PRIVATE
     ${googletest_SOURCE_DIR}/googlemock/include
 )
 
-# Link with GoogleTest
 target_link_libraries(UnitTests PRIVATE
-    math_operations
     gtest_main
-    gtest
+    GTest::gtest
 )
 
 # Register the test

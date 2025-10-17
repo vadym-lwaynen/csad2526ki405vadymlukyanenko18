@@ -23,6 +23,9 @@ jobs:
     - name: Set up CMake
       uses: lukka/get-cmake@latest
 
+    - name: Give execute permission to ci.sh
+      run: chmod +x ci.sh
+
     - name: Run CI script
       run: ./ci.sh
       shell: bash

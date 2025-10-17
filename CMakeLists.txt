@@ -46,8 +46,9 @@ target_include_directories(UnitTests PRIVATE
 
 # Link with GoogleTest
 target_link_libraries(UnitTests PRIVATE
-    gtest
+    math_operations
     gtest_main
+    gtest
 )
 
 # Register the test

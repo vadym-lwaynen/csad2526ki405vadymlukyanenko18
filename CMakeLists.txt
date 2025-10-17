@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 project(MyProject)
 
 # Set C++ standard
